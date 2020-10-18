@@ -17,19 +17,16 @@ const options = {
     host: "142.93.113.121:3000",
     basepath: "/",
   },
-  apis: ["./server.js"],
+  apis: ["./app.js"],
 };
 const specs = swaggerjsdoc(options);
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(specs));
 app.use(cors());
-// const sanitizer = require("sanitize")();
 
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(require("sanitize").middleware);
 
-// parse application/json
 app.use(bodyParser.json());
 const { check, validationResult } = require("express-validator");
 const mariadb = require("mariadb");
@@ -44,16 +41,8 @@ const pool = mariadb.createPool({
 });
 let conn;
 let rows;
-//connecting to maria db
-// reference: https://mariadb.com/kb/en/getting-started-with-the-nodejs-connector/
 
-//Description about the URI
 
-app.get("/", (req, res) => {
-  res.send(
-    "you have the following urls that you can hit /n agent  company  customer  agent/'code'  company/'id'  customer/'code'    "
-  );
-});
 
 /**
  * @swagger
@@ -196,7 +185,7 @@ app.get("/company/:id", async (req, res) => {
   }
 });
 
-//to get customer with specific code
+
 
 /**
  * @swagger
@@ -476,7 +465,7 @@ app.delete("/company/:compId", async (req, res) => {
  * @swagger
  * /say:
  *   get:
- *     description: returns the given word by adding koushik says in front.
+ *     description: returns the given word by adding Chandra Kanth says in front.
  *     parameters:
  *       - name: keyword
  *         in: query
@@ -487,19 +476,17 @@ app.delete("/company/:compId", async (req, res) => {
  *         description: OK
  */
 app.get("/say", async (req, res) => {
-  // console.log("entering in say " + req.query.keyword);
+  
   try {
     const message = await axios.get(
-      "https://lym0b3lwji.execute-api.us-east-1.amazonaws.com/v1/say?keyword=" +
+      "https://d7slee5yt6.execute-api.us-east-2.amazonaws.com/v1/test?word=" +
         req.query.keyword
     );
 
     res.send(message.data);
   } catch (err) {
     throw err;
-  } finally {
-    console.log("Successful!!");
-  }
+  } 
 });
 
 app.listen(port, () => {

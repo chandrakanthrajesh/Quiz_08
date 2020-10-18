@@ -1,11 +1,9 @@
 exports.handler = async (event) => {
-    // TODO implement
-  
-    const param = event["queryStringParameters"]["keyword"];
-    const response = {
-      statusCode: 200,
-      body: JSON.stringify("Ck says" + param),
-    };
-    return response;
-  };
-  
+  let param = event["queryStringParameters"]["word"];
+const response = {
+  statusCode: 200,
+  body: JSON.stringify("Chandra Kanth says " + param),
+};
+return response;
+ 
+};
